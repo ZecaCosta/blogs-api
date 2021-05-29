@@ -8,9 +8,9 @@ const createUser = async (req, res) => {
         const user = await User.create({ displayName, email, password, image });
         const { id } = user.dataValues;
         const token = createToken(id, displayName, email);
-        res.status(httpStatus.CREATED).json({ token });
+        return res.status(httpStatus.CREATED).json({ token });
     } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
           message: 'Erro ao salvar o usuário no banco',
           error: error.message,
         });
@@ -23,9 +23,9 @@ const createLogin = async (req, res) => {
       const user = await User.findOne({ where: { email } });
       const { id, displayName } = user.dataValues;
       const token = createToken(id, displayName, email);
-      res.status(httpStatus.OK).json({ token });
+      return res.status(httpStatus.OK).json({ token });
     } catch (error) {
-      res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
           message: 'Erro ao tentar fazer login',
           error: error.message,
         });
@@ -37,9 +37,9 @@ const getUsers = async (req, res) => {
   try {
       const users = await User.findAll();
       if (!users) return res.status(httpStatus.NOT_FOUND).json(noUsersMessage);
-      res.status(httpStatus.OK).json(users);
+      return res.status(httpStatus.OK).json(users);
   } catch (error) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
         message: 'Erro ao buscar usuários no banco',
         error: error.message,
       });
@@ -51,9 +51,9 @@ const getUser = async (req, res) => {
     const noUserMessage = { message: 'User does not exist' };
     const user = await User.findByPk(req.params.id);
       if (!user) return res.status(httpStatus.NOT_FOUND).json(noUserMessage);
-      res.status(httpStatus.OK).json(user);
+      return res.status(httpStatus.OK).json(user);
   } catch (error) {
-    res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
         message: 'Erro ao buscar usuário no banco',
         error: error.message,
       });
