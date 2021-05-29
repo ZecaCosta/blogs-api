@@ -7,6 +7,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
 app.use(routes.usersRoute);
+app.use(routes.categoriesRoute);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {
