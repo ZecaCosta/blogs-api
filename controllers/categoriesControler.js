@@ -14,19 +14,19 @@ const createCategory = async (req, res) => {
     }
 };
 
-// const getUsers = async (req, res) => {
-//   const noUsersMessage = { message: 'Users do not exist' };
-//   try {
-//       const categories = await Category.findAll();
-//       if (!categories) return res.status(httpStatus.NOT_FOUND).json(noUsersMessage);
-//       return res.status(httpStatus.OK).json(categories);
-//   } catch (error) {
-//     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-//         message: 'Erro ao buscar usuários no banco',
-//         error: error.message,
-//       });
-//   }
-// };
+const getUsers = async (req, res) => {
+  const noCategoriesMessage = { message: 'Categories do not exist' };
+  try {
+      const categories = await Category.findAll();
+      if (!categories) return res.status(httpStatus.NOT_FOUND).json(noCategoriesMessage);
+      return res.status(httpStatus.OK).json(categories);
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        message: 'Erro ao buscar categorias no banco',
+        error: error.message,
+      });
+  }
+};
 
 // const getUser = async (req, res) => {
 //   try {
@@ -44,7 +44,6 @@ const createCategory = async (req, res) => {
 
 module.exports = {
   createCategory,
-//   createLogin,
-//   getUsers,
+  getUsers,
 //   getUser,
 };

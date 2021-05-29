@@ -10,9 +10,9 @@ categoryValidation.validateCategory,
 validateToken,
 categoriesController.createCategory);
 
-// router.get('/categories',
-// validateToken,
-// categoriesController.getUsers);
+router.get('/categories',
+validateToken,
+categoriesController.getUsers);
 
 // router.get('/categories/:id',
 // validateToken,
