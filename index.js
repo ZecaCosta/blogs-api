@@ -8,6 +8,7 @@ const PORT = process.env.PORT || 3000;
 
 app.use(routes.usersRoute);
 app.use(routes.categoriesRoute);
+app.use(routes.postsRoute);
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (request, response) => {

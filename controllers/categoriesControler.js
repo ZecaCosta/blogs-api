@@ -1,7 +1,7 @@
 const httpStatus = require('./httpStatus');
 const { Category } = require('../models');
 
-const createCategory = async (req, res) => {
+const create = async (req, res) => {
     try {
         const { name } = req.body;
         const category = await Category.create({ name });
@@ -14,7 +14,7 @@ const createCategory = async (req, res) => {
     }
 };
 
-const getUsers = async (req, res) => {
+const getAll = async (req, res) => {
   const noCategoriesMessage = { message: 'Categories do not exist' };
   try {
       const categories = await Category.findAll();
@@ -28,22 +28,7 @@ const getUsers = async (req, res) => {
   }
 };
 
-// const getUser = async (req, res) => {
-//   try {
-//     const noUserMessage = { message: 'User does not exist' };
-//     const category = await Category.findByPk(req.params.id);
-//       if (!category) return res.status(httpStatus.NOT_FOUND).json(noUserMessage);
-//       return res.status(httpStatus.OK).json(category);
-//   } catch (error) {
-//     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
-//         message: 'Erro ao buscar usuário no banco',
-//         error: error.message,
-//       });
-//   }
-// };
-
 module.exports = {
-  createCategory,
-  getUsers,
-//   getUser,
+  create,
+  getAll,
 };
