@@ -33,10 +33,10 @@ const createLogin = async (req, res) => {
 };
 
 const getUsers = async (req, res) => {
-  const noUsersMessage = { message: 'Users do not exist' };
+  const message = 'Users do not exist';
   try {
       const users = await User.findAll();
-      if (!users) return res.status(httpStatus.NOT_FOUND).json(noUsersMessage);
+      if (!users) return res.status(httpStatus.NOT_FOUND).json({ message });
       return res.status(httpStatus.OK).json(users);
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
@@ -48,9 +48,9 @@ const getUsers = async (req, res) => {
 
 const getUser = async (req, res) => {
   try {
-    const noUserMessage = { message: 'User does not exist' };
+    const message = 'User does not exist';
     const user = await User.findByPk(req.params.id);
-      if (!user) return res.status(httpStatus.NOT_FOUND).json(noUserMessage);
+      if (!user) return res.status(httpStatus.NOT_FOUND).json({ message });
       return res.status(httpStatus.OK).json(user);
   } catch (error) {
     return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
