@@ -1,4 +1,4 @@
-const { Category } = require('../models');
+const { Category, User, BlogPost } = require('../models');
 const httpStatus = require('../controllers/httpStatus');
 
 const validatePost = (req, res, next) => {
@@ -32,7 +32,22 @@ const categoryExists = async (req, res, next) => {
   next();
 };
 
+const paramExists = async (req, res, next) => {
+  if (!req.query.q) {
+    const allPosts = await BlogPost.findAll({ 
+      where: { userId: req.user.id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    }); 
+      return res.status(httpStatus.OK).json(allPosts);
+  }
+  next();
+};
+
 module.exports = {
   validatePost,
   categoryExists,
+  paramExists,
 };

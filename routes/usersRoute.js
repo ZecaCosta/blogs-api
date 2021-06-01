@@ -20,6 +20,10 @@ router.get('/user/:id',
 validateToken,
 usersController.getUser);
 
+router.delete('/user/me',
+validateToken,
+usersController.deleteUser);
+
 router.post('/login',
 loginValidation.validateEmail,
 loginValidation.validatePassaword,

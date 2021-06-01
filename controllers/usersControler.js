@@ -60,9 +60,25 @@ const getUser = async (req, res) => {
   }
 };
 
+const deleteUser = async (req, res) => {
+  const { id } = req.user;
+  try {
+    await User.destroy({
+      where: { id },
+    });
+      return res.status(httpStatus.NOT_CONTENT).send();
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        message: 'Erro ao deletar usuário no banco',
+        error: error.message,
+      });
+  }
+};
+
 module.exports = {
   createUser,
   createLogin,
   getUsers,
   getUser,
+  deleteUser,
 };

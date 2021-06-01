@@ -80,10 +80,45 @@ const update = async (req, res) => {
     });
   }
 };
+const deletePost = async (req, res) => {
+  try {
+  await BlogPost.destroy({
+    where: { id: req.params.id },
+  });
+  return res.status(httpStatus.NOT_CONTENT).json();
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+      message: 'Erro ao deletar post no banco', error: error.message,
+    });
+  }
+};
+
+const searchPost = async (req, res) => {
+  const term = req.query.q;
+  try {
+    const allPosts = await BlogPost.findAll({ 
+      where: { userId: req.user.id },
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { attributes: [] } },
+      ],
+    });
+    const filteredPosts = allPosts.filter((post) =>
+      post.dataValues.title.includes(term) || post.dataValues.content.includes(term)); 
+    return res.status(httpStatus.OK).json(filteredPosts);
+  } catch (error) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).json({
+        message: 'Erro ao pesquisar post no banco',
+        error: error.message,
+      });
+  }
+};
 
 module.exports = {
   create,
   getAll,
   getById,
   update,
+  deletePost,
+  searchPost,
 };
